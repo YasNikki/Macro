@@ -6,11 +6,10 @@
 package view;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author yasmi
- */
 public class Metas_Macro_GUI extends javax.swing.JFrame {
 
     /**
@@ -18,6 +17,12 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
      */
     public Metas_Macro_GUI() {
         initComponents();
+        
+        try {
+            model.database_metas_DAO.carregaMetas();
+        } catch (SQLException ex) {
+            Logger.getLogger(Metas_Macro_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -45,14 +50,16 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         panelImage5 = new org.edisoncor.gui.panel.PanelImage();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        registros = new javax.swing.JTable();
+        titulo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        desc = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        data = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pagina Inicial");
@@ -79,7 +86,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("DASHBOARD");
 
         panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard.png"))); // NOI18N
@@ -138,8 +145,8 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("GASTOS");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel2.setText("GASTOS/GANHOS");
 
         panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fluxo-de-dinheiro.png"))); // NOI18N
 
@@ -176,7 +183,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(botaoGastos);
-        botaoGastos.setBounds(10, 220, 262, 50);
+        botaoGastos.setBounds(10, 220, 260, 50);
 
         botaoMetas.setBackground(new java.awt.Color(204, 204, 204));
         botaoMetas.setToolTipText("Gerenciar dados cadastrados.");
@@ -193,7 +200,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("METAS");
 
         panelImage4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/growth.png"))); // NOI18N
@@ -231,7 +238,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(botaoMetas);
-        botaoMetas.setBounds(10, 280, 262, 50);
+        botaoMetas.setBounds(10, 280, 260, 50);
 
         botaoSair.setBackground(new java.awt.Color(228, 228, 228));
         botaoSair.setToolTipText("");
@@ -248,7 +255,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Fechar Software");
 
@@ -291,46 +298,77 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
         FundoPrincipal.add(jPanel1);
         jPanel1.setBounds(0, 0, 280, 490);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        registros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Meta", "Descrição", "Data Alvo"
+                "Meta", "Descrição", "Data Alvo", "Conclusão"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(registros);
 
         FundoPrincipal.add(jScrollPane1);
         jScrollPane1.setBounds(290, 10, 520, 280);
-        FundoPrincipal.add(jTextField1);
-        jTextField1.setBounds(300, 330, 160, 30);
+        FundoPrincipal.add(titulo);
+        titulo.setBounds(300, 330, 160, 30);
 
         jLabel5.setText("Meta");
         FundoPrincipal.add(jLabel5);
-        jLabel5.setBounds(300, 310, 160, 16);
-        FundoPrincipal.add(jTextField2);
-        jTextField2.setBounds(470, 330, 160, 30);
+        jLabel5.setBounds(300, 310, 160, 14);
+        FundoPrincipal.add(desc);
+        desc.setBounds(470, 330, 160, 30);
 
         jLabel6.setText("Descrição");
         FundoPrincipal.add(jLabel6);
-        jLabel6.setBounds(470, 310, 160, 16);
+        jLabel6.setBounds(470, 310, 160, 14);
 
         jLabel7.setText("Data Alvo");
         FundoPrincipal.add(jLabel7);
-        jLabel7.setBounds(640, 310, 160, 16);
+        jLabel7.setBounds(640, 310, 160, 14);
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        FundoPrincipal.add(jFormattedTextField1);
-        jFormattedTextField1.setBounds(640, 330, 160, 30);
+        FundoPrincipal.add(data);
+        data.setBounds(640, 330, 160, 30);
 
         jButton1.setText("Registrar Meta");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         FundoPrincipal.add(jButton1);
-        jButton1.setBounds(640, 370, 160, 30);
+        jButton1.setBounds(470, 370, 160, 40);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Check.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        FundoPrincipal.add(jButton2);
+        jButton2.setBounds(640, 370, 80, 40);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/excluir.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        FundoPrincipal.add(jButton3);
+        jButton3.setBounds(720, 370, 80, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -409,7 +447,7 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
 
     private void botaoDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoDashboardMouseClicked
         
-        new Metas_Macro_GUI().setVisible(true);
+        new Dashboard_Macro_GUI().setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_botaoDashboardMouseClicked
@@ -420,6 +458,24 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_botaoGastosMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        model.database_metas_DAO.verificaMeta();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        model.database_metas_DAO.desregistraMetas();
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        model.database_metas_DAO.registraMetas();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -494,8 +550,11 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel botaoGastos;
     private javax.swing.JPanel botaoMetas;
     private javax.swing.JPanel botaoSair;
+    public static javax.swing.JFormattedTextField data;
+    public static javax.swing.JTextField desc;
     private javax.swing.JButton jButton1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -505,12 +564,11 @@ public class Metas_Macro_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private org.edisoncor.gui.panel.PanelImage panelImage2;
     private org.edisoncor.gui.panel.PanelImage panelImage3;
     private org.edisoncor.gui.panel.PanelImage panelImage4;
     private org.edisoncor.gui.panel.PanelImage panelImage5;
+    public static javax.swing.JTable registros;
+    public static javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }

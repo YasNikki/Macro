@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package view;
 
 import java.awt.Color;
 
-/**
- *
- * @author yasmi
- */
 public class Home_Macro_GUI extends javax.swing.JFrame {
 
     /**
@@ -71,7 +63,7 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("DASHBOARD");
 
         panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard.png"))); // NOI18N
@@ -130,8 +122,8 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("GASTOS");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel2.setText("GASTOS/GANHOS");
 
         panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fluxo-de-dinheiro.png"))); // NOI18N
 
@@ -168,7 +160,7 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(botaoGastos);
-        botaoGastos.setBounds(10, 220, 262, 50);
+        botaoGastos.setBounds(10, 220, 260, 50);
 
         botaoMetas.setBackground(new java.awt.Color(228, 228, 228));
         botaoMetas.setToolTipText("Gerenciar dados cadastrados.");
@@ -185,7 +177,7 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("METAS");
 
         panelImage4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/growth.png"))); // NOI18N
@@ -223,7 +215,7 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(botaoMetas);
-        botaoMetas.setBounds(10, 280, 262, 50);
+        botaoMetas.setBounds(10, 280, 260, 50);
 
         botaoSair.setBackground(new java.awt.Color(228, 228, 228));
         botaoSair.setToolTipText("");
@@ -240,7 +232,7 @@ public class Home_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Fechar Software");
 

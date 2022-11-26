@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Alunos/Downloads/CEAPKeyOrganizer-main/CEAPKeyOrganizer-main/src/main/Main.java</file>
-            <file>file:/C:/Users/Alunos/Downloads/CEAPKeyOrganizer-main/CEAPKeyOrganizer-main/src/view/Dashboard_Macro_GUI.java</file>
-            <file>file:/C:/Users/Alunos/Downloads/CEAPKeyOrganizer-main/CEAPKeyOrganizer-main/src/view/Metas_Macro_GUI.java</file>
-            <file>file:/C:/Users/Alunos/Downloads/CEAPKeyOrganizer-main/CEAPKeyOrganizer-main/src/view/Gastos_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/view/Gastos_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/view/Dashboard_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/model/database_metas_DAO.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/view/Home_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/view/Splash_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/view/Metas_Macro_GUI.java</file>
+            <file>file:/C:/Users/yasmi/Documents/NetBeansProjects/MacroProject/src/model/database_gastos_DAO.java</file>
         </group>
     </open-files>
 </project-private>

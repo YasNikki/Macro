@@ -6,11 +6,10 @@
 package view;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author yasmi
- */
 public class Gastos_Macro_GUI extends javax.swing.JFrame {
 
     /**
@@ -18,6 +17,12 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
      */
     public Gastos_Macro_GUI() {
         initComponents();
+        
+        try {
+            model.database_gastos_DAO.carregaGastoGanho();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_Macro_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -45,14 +50,16 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         panelImage5 = new org.edisoncor.gui.panel.PanelImage();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        registros = new javax.swing.JTable();
+        titulo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        desc = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        valor = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        tipo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pagina Inicial");
@@ -79,7 +86,7 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("DASHBOARD");
 
         panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard.png"))); // NOI18N
@@ -138,8 +145,8 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("GASTOS");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel2.setText("GASTOS/GANHOS");
 
         panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fluxo-de-dinheiro.png"))); // NOI18N
 
@@ -170,13 +177,13 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoGastosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(botaoGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(panelImage3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jPanel1.add(botaoGastos);
-        botaoGastos.setBounds(10, 220, 262, 50);
+        botaoGastos.setBounds(10, 220, 260, 50);
 
         botaoMetas.setBackground(new java.awt.Color(228, 228, 228));
         botaoMetas.setToolTipText("Gerenciar dados cadastrados.");
@@ -193,7 +200,7 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("METAS");
 
         panelImage4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/growth.png"))); // NOI18N
@@ -225,13 +232,13 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botaoMetasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(botaoMetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(panelImage4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jPanel1.add(botaoMetas);
-        botaoMetas.setBounds(10, 280, 262, 50);
+        botaoMetas.setBounds(10, 280, 260, 50);
 
         botaoSair.setBackground(new java.awt.Color(228, 228, 228));
         botaoSair.setToolTipText("");
@@ -248,7 +255,7 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Fechar Software");
 
@@ -291,48 +298,66 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
         FundoPrincipal.add(jPanel1);
         jPanel1.setBounds(0, 0, 280, 490);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        registros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Anotação | Título", "Descrição", "Valores", "Data"
+                "Anotação | Título", "Descrição", "Valores", "Data", "Tipo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(registros);
 
         FundoPrincipal.add(jScrollPane1);
         jScrollPane1.setBounds(290, 20, 520, 310);
-        FundoPrincipal.add(jTextField1);
-        jTextField1.setBounds(430, 370, 180, 22);
+        FundoPrincipal.add(titulo);
+        titulo.setBounds(310, 370, 180, 20);
 
         jLabel5.setText("Anotação | Título");
         FundoPrincipal.add(jLabel5);
-        jLabel5.setBounds(430, 350, 180, 16);
-        FundoPrincipal.add(jTextField2);
-        jTextField2.setBounds(430, 420, 180, 40);
+        jLabel5.setBounds(310, 350, 180, 14);
+        FundoPrincipal.add(desc);
+        desc.setBounds(310, 420, 180, 40);
 
         jLabel6.setText("Descrição");
         FundoPrincipal.add(jLabel6);
-        jLabel6.setBounds(430, 400, 180, 16);
-        FundoPrincipal.add(jTextField3);
-        jTextField3.setBounds(620, 370, 180, 22);
+        jLabel6.setBounds(340, 400, 180, 14);
+        FundoPrincipal.add(valor);
+        valor.setBounds(500, 370, 180, 20);
 
         jLabel7.setText("Valores");
         FundoPrincipal.add(jLabel7);
-        jLabel7.setBounds(620, 350, 180, 16);
+        jLabel7.setBounds(500, 350, 180, 14);
 
-        jButton1.setText("Registrar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/excluir.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         FundoPrincipal.add(jButton1);
-        jButton1.setBounds(620, 420, 180, 40);
+        jButton1.setBounds(690, 420, 70, 40);
+
+        jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        FundoPrincipal.add(jButton2);
+        jButton2.setBounds(500, 420, 180, 40);
+
+        tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ganho", "Gasto" }));
+        FundoPrincipal.add(tipo);
+        tipo.setBounds(690, 370, 70, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -412,7 +437,7 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
 
     private void botaoDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoDashboardMouseClicked
         
-        new Gastos_Macro_GUI().setVisible(true);
+        new Dashboard_Macro_GUI().setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_botaoDashboardMouseClicked
@@ -422,6 +447,18 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_botaoGastosMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        model.database_gastos_DAO.registraGastoGanho();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        model.database_gastos_DAO.desregistraGastoGanho();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,7 +517,9 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel botaoGastos;
     private javax.swing.JPanel botaoMetas;
     private javax.swing.JPanel botaoSair;
+    public static javax.swing.JTextField desc;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -490,13 +529,13 @@ public class Gastos_Macro_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private org.edisoncor.gui.panel.PanelImage panelImage2;
     private org.edisoncor.gui.panel.PanelImage panelImage3;
     private org.edisoncor.gui.panel.PanelImage panelImage4;
     private org.edisoncor.gui.panel.PanelImage panelImage5;
+    public static javax.swing.JTable registros;
+    public static javax.swing.JComboBox tipo;
+    public static javax.swing.JTextField titulo;
+    public static javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
 }
